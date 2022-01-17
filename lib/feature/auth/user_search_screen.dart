@@ -12,6 +12,9 @@ import 'package:sytiamo/utils/colors.dart';
 import 'package:sytiamo/utils/images.dart';
 
 class UserSearchScreen extends StatefulWidget {
+  final String branchID;
+
+  const UserSearchScreen({Key key, this.branchID}) : super(key: key);
   @override
   _UserSearchScreenState createState() => _UserSearchScreenState();
 }
@@ -77,27 +80,57 @@ class _UserSearchScreenState extends State<UserSearchScreen> with AdsView {
                           String fullName = (model.firstName ?? "") +
                               " " +
                               (model.middleName ?? "");
-                          return Container(
-                            margin: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color.fromRGBO(0, 0, 0, 0.15),
-                                    blurRadius: 5)
-                              ],
-                            ),
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.pop(context,
-                                    settingsController.listOfCustomer[index]);
-                              },
-                              trailing: Text(model.phone ?? ""),
-                              subtitle: Text(model.shopAddress ?? ""),
-                              title: Text(fullName),
-                            ),
-                          );
+
+                          print("Miracle ${widget.branchID} ");
+                          print("Ebuka ${model.branchId.toString()} ");
+                          if (widget.branchID == null) {
+                            return Container(
+                              margin: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color.fromRGBO(0, 0, 0, 0.15),
+                                      blurRadius: 5)
+                                ],
+                              ),
+                              child: ListTile(
+                                onTap: () {
+                                  Navigator.pop(context,
+                                      settingsController.listOfCustomer[index]);
+                                },
+                                trailing: Text(model.phone ?? ""),
+                                subtitle: Text(model.shopAddress ?? ""),
+                                title: Text(fullName),
+                              ),
+                            );
+                          } else if (widget.branchID != null &&
+                              widget.branchID == model.branchId.toString()) {
+                            return Container(
+                              margin: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color.fromRGBO(0, 0, 0, 0.15),
+                                      blurRadius: 5)
+                                ],
+                              ),
+                              child: ListTile(
+                                onTap: () {
+                                  Navigator.pop(context,
+                                      settingsController.listOfCustomer[index]);
+                                },
+                                trailing: Text(model.phone ?? ""),
+                                subtitle: Text(model.shopAddress ?? ""),
+                                title: Text(fullName),
+                              ),
+                            );
+                          } else {
+                            return Container();
+                          }
                         }))
                 : Expanded(
                     child: Column(

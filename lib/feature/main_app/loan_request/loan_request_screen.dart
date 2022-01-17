@@ -11,7 +11,6 @@ import 'package:sytiamo/data/local/prefs.dart';
 import 'package:sytiamo/data/model/responseModel/loan_product_response.dart';
 import 'package:sytiamo/data/model/responseModel/location_response.dart';
 import 'package:sytiamo/utils/abstract_view.dart';
-import 'package:sytiamo/utils/colors.dart';
 import 'package:sytiamo/utils/navigator_helper.dart';
 
 class LoanRequestScreen extends StatefulWidget {
@@ -50,8 +49,6 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
           scaffoldKey: _scaffoldKey,
           state: AppState(pageState: settingsController.pageState),
           appBar: SYAppBar(
-            backgroundColor: mainColor,
-            iconTheme: IconThemeData(color: whiteColor),
             title: Text(
               "Loan Request",
             ),
@@ -88,6 +85,7 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
                     },
                     onChanged: (v) {
                       print(v.name);
+                      print(v.id);
                       settingsController.onSelectLocation(v);
                     },
                     // hint: Text("Identity Method"),
@@ -104,22 +102,28 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
                   SizedBox(
                     height: 15,
                   ),
-                  InkWell(
-                    onTap: () {
-                      moveSearchPage(context).then((value) {
-                        print(value);
-                        settingsController.selectedCustomer = value;
-                      });
-                    },
-                    child: SYTitleForm(
-                      hintStyle: TextStyle(color: Colors.black),
-                      hintText:
-                          "${settingsController.selectedCustomer?.firstName ?? ''}  ${settingsController.selectedCustomer?.middleName ?? ''}",
-                      enable: false,
-                      title: "Customer",
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
+                  settingsController.selectedLocationModel != null
+                      ? InkWell(
+                          onTap: () {
+                            moveSearchPage(context,
+                                    marketID: settingsController
+                                        .selectedLocationModel.id
+                                        .toString())
+                                .then((value) {
+                              print(value);
+                              settingsController.selectedCustomer = value;
+                            });
+                          },
+                          child: SYTitleForm(
+                            hintStyle: TextStyle(color: Colors.black),
+                            hintText:
+                                "${settingsController.selectedCustomer?.firstName ?? ''}  ${settingsController.selectedCustomer?.middleName ?? ''}",
+                            enable: false,
+                            title: "Customer",
+                            keyboardType: TextInputType.number,
+                          ),
+                        )
+                      : Container(),
                   SizedBox(
                     height: 20,
                   ),

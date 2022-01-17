@@ -219,6 +219,7 @@ class SettingsController extends ChangeNotifier {
   clearData() {
     amountToPay = null;
     _selectedLoanModel = null;
+    _selectedLocationModel = null;
     loanAmount = null;
     selectedCustomer = null;
     _listOfCustomer = null;

@@ -3,6 +3,7 @@ import 'package:sytiamo/custom_widget/sy_scaffold.dart';
 import 'package:sytiamo/data/local/prefs.dart';
 import 'package:sytiamo/data/model/responseModel/location_response.dart';
 import 'package:sytiamo/feature/main_app/enrollment/personal_verification.dart';
+import 'package:sytiamo/feature/main_app/list_of_market.dart';
 import 'package:sytiamo/feature/main_app/loan_collection/collect_screen.dart';
 import 'package:sytiamo/feature/main_app/loan_request/loan_request_screen.dart';
 import 'package:sytiamo/feature/main_app/report/report_screen.dart';
@@ -82,30 +83,43 @@ class DashBoard extends StatelessWidget {
                             builder: (context, snapshot) {
                               if (snapshot.hasData &&
                                   snapshot.data.isNotEmpty) {
-                                return Wrap(
-                                  children: List.generate(
-                                      snapshot.data.length,
-                                      (index) => Padding(
-                                            padding: const EdgeInsets.all(2.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.grey,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(5.0),
-                                                child: Text(
-                                                  snapshot.data[index].name
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 10,
-                                                      color: Colors.white),
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => MarketListScreen(
+                                                  marketList: snapshot.data,
+                                                )));
+                                  },
+                                  child: Wrap(
+                                    children: List.generate(
+                                        snapshot.data.length > 3
+                                            ? 3
+                                            : snapshot.data.length,
+                                        (index) => Padding(
+                                              padding:
+                                                  const EdgeInsets.all(2.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: Colors.grey,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12)),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text(
+                                                    snapshot.data[index].name
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 10,
+                                                        color: Colors.white),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          )),
+                                            )),
+                                  ),
                                 );
                               } else {
                                 return Container();
