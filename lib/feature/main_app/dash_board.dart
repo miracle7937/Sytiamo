@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sytiamo/custom_widget/sy_scaffold.dart';
 import 'package:sytiamo/data/local/prefs.dart';
 import 'package:sytiamo/data/model/responseModel/location_response.dart';
+import 'package:sytiamo/feature/auth/user_search_screen.dart';
 import 'package:sytiamo/feature/main_app/enrollment/personal_verification.dart';
 import 'package:sytiamo/feature/main_app/list_of_market.dart';
 import 'package:sytiamo/feature/main_app/loan_collection/collect_screen.dart';
@@ -207,6 +208,24 @@ class DashBoard extends StatelessWidget {
                     ),
                   ],
                 ),
+                Spacer(),
+                Row(
+                  children: [
+                    CardView(
+                      title: "Customer List",
+                      image: SYImages.search,
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserSearchScreen(
+                                      showLocationForm: true,
+                                    )));
+                      },
+                    ),
+                    Spacer(),
+                  ],
+                ),
                 Spacer(
                   flex: 3,
                 ),
@@ -245,8 +264,8 @@ class CardView extends StatelessWidget {
             ),
           ],
         ),
-        height: MediaQuery.of(context).size.height * 0.2,
-        width: MediaQuery.of(context).size.height * 0.2,
+        height: MediaQuery.of(context).size.height * 0.18,
+        width: MediaQuery.of(context).size.height * 0.18,
         decoration: BoxDecoration(
             // border: Border.all(
             //   width: 0.5,

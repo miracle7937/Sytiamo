@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sytiamo/custom_widget/button.dart';
+import 'package:sytiamo/data/model/selectorModel.dart';
 import 'package:sytiamo/utils/images.dart';
 
 _createExtensibleDialogWidget(
@@ -212,6 +213,99 @@ Future<void> showStatusBottomSheet(BuildContext context,
                 message,
                 textAlign: TextAlign.center,
               )),
+              SizedBox(
+                height: 20,
+              ),
+              SYButton(
+                title: "OK",
+                callback: callback,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              SYButton(
+                title: "Cancel",
+                color: Colors.grey,
+                callback: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: SizedBox(
+                  height: 15,
+                ),
+              )
+            ],
+          ),
+        ),
+        padding: const EdgeInsets.all(10),
+      );
+    },
+  );
+}
+
+Future<void> showIVListActionBottomSheet(BuildContext context,
+    {String title, List<SelectorModel> data, VoidCallback callback}) {
+  return showModalBottomSheet(
+    backgroundColor: Colors.transparent,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(15),
+        topRight: Radius.circular(15),
+      ),
+    ),
+    isScrollControlled: true,
+    context: context,
+    builder: (context) {
+      return _createExtensibleDialogWidget(
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              Center(
+                child: Container(
+                  height: 5,
+                  width: MediaQuery.of(context).size.width * 0.15,
+                  decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(50)),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              // ListTile(
+              //   leading: Text(e.key.toString()),
+              //   trailing: Text(e.value.toString().isEmpty
+              //       ? "NA"
+              //       : e.value.toString()),
+
+              Column(
+                  children: data
+                      .map((e) => Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(e.key.toString()),
+                                Text(
+                                  e.value.toString().isEmpty
+                                      ? "NA"
+                                      : e.value.toString(),
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ))
+                      .toList()),
               SizedBox(
                 height: 20,
               ),

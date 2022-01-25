@@ -12,10 +12,13 @@ import 'package:sytiamo/utils/string_helper.dart';
 
 class SettingsController extends ChangeNotifier {
   AdsView adsView;
+  UserSearchView userSearchView;
   LoanCreationModel loanCreationModel = LoanCreationModel();
   List<String> errorForm = [];
-  List<CustomerModel> get listOfCustomer => _listOfCustomer;
+  List<CustomerModel> get listOfCustomer => _queryListOfCustomer;
   List<CustomerModel> _listOfCustomer;
+  List<CustomerModel> _queryListOfCustomer;
+
   CustomerModel get selectedCustomer => _selectedCustomer;
   CustomerModel _selectedCustomer;
 
@@ -40,7 +43,15 @@ class SettingsController extends ChangeNotifier {
 
   String _title, _message;
 
-  set selectedCustomer(v) {
+  List<int> durationsToSelect = [4, 8, 10, 12];
+  int durationValue;
+
+  // set selectedCustomer(v) {
+  //   _selectedCustomer = v;
+  //   // notifyListeners();
+  // }
+
+  selectedCustomerPage(v) {
     _selectedCustomer = v;
     notifyListeners();
   }
@@ -49,9 +60,67 @@ class SettingsController extends ChangeNotifier {
     adsView = view;
   }
 
+  set setUserSearchView(view) {
+    userSearchView = view;
+  }
+
   onSelectLocation(v) {
     _selectedLocationModel = v;
     notifyListeners();
+  }
+
+  onSelectDuration(v) {
+    durationValue = v;
+    loanCreationModel.duration = v.toString();
+    notifyListeners();
+  }
+
+  onSelectLocationQueryPage(LocationModel v) {
+    _selectedLocationModel = v;
+    searchUserBuMarketID(locationId: v.id);
+  }
+
+  queryUser(String value) {
+    if (value.trim().isNotEmpty) {
+      _queryListOfCustomer = _listOfCustomer
+          .where((element) =>
+              element.firstName
+                  .toString()
+                  .toLowerCase()
+                  .contains(value.toLowerCase()) ||
+              element.middleName
+                  .toString()
+                  .toLowerCase()
+                  .contains(value.toLowerCase()))
+          .toList();
+    } else {
+      _queryListOfCustomer = _listOfCustomer;
+    }
+    notifyListeners();
+  }
+
+  searchUserBuMarketID({var locationId}) {
+    // Map map = {"location_id": 50};
+    Map map = {"location_id": locationId ?? (selectedLocationModel?.id ?? 1)};
+    print("summit");
+    pageState = PageState.loading;
+    if (locationId != null) {
+      notifyListeners();
+    }
+    SettingRepo().searchUserByMarketID(map).then((value) {
+      if (value.status == true) {
+        _listOfCustomer = value.data;
+        _queryListOfCustomer = value.data;
+      } else {
+        userSearchView.onError("Error occurred");
+      }
+      pageState = PageState.loaded;
+      notifyListeners();
+    }).catchError((v) {
+      pageState = PageState.loaded;
+      notifyListeners();
+      userSearchView.onError("an error occurred");
+    });
   }
 
   sendSMSMessage(String phoneNumber) {
@@ -129,7 +198,8 @@ class SettingsController extends ChangeNotifier {
   bool requestLoanButtonValidation() {
     if (amountToPay != null &&
         selectedLoanModel.id != null &&
-        _selectedCustomer != null) {
+        _selectedCustomer != null &&
+        durationValue != null) {
       return true;
     } else {
       return false;
@@ -148,7 +218,6 @@ class SettingsController extends ChangeNotifier {
     loanCreationModel.loanProductId = selectedLoanModel.id.toString();
     loanCreationModel.totalPayable = amountToPay;
     loanCreationModel.branchID = _selectedLocationModel.id.toString();
-
     print(loanCreationModel.toJson());
     RequestLoanRepo().post(loanCreationModel).then((value) {
       if (value.status == true) {
@@ -181,7 +250,7 @@ class SettingsController extends ChangeNotifier {
       "message": _message,
       "status": "1",
       "created_user_id": userId.toString(),
-      "user_id": selectedCustomer.id.toString()
+      "user_id": _selectedCustomer.id.toString()
     };
     pageState = PageState.loading;
     notifyListeners();
@@ -219,9 +288,10 @@ class SettingsController extends ChangeNotifier {
   clearData() {
     amountToPay = null;
     _selectedLoanModel = null;
-    _selectedLocationModel = null;
+    // _selectedLocationModel = null;
     loanAmount = null;
-    selectedCustomer = null;
+    // _selectedCustomer = null;
     _listOfCustomer = null;
+    _queryListOfCustomer = null;
   }
 }

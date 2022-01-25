@@ -10,6 +10,13 @@ import '../http.dart';
 class SettingRepo {
   ServerData _serverData = ServerData();
 
+  Future<CustomerResponse> searchUserByMarketID(Map map) async {
+    var responseData = await _serverData.postData(null,
+        path: Routes.userByMarketID, body: map);
+    print(responseData.data);
+    return CustomerResponse.fromJson(responseData.data);
+  }
+
   Future<CustomerResponse> customer(String name) async {
     var responseData =
         await _serverData.getData(null, path: Routes.getCustomer(name));

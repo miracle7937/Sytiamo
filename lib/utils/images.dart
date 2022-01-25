@@ -11,6 +11,7 @@ class SYImages {
   static String userSearch = "$root/search_user.gif";
   static String userPic = "assets/user_image.png";
   static String document = "assets/document.png";
+  static String search = "assets/search.png";
   static String caution = "assets/Caution.png";
   static String loader = "$root/loader.gif";
   static String agent = "$root/agent.gif";

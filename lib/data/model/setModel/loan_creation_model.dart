@@ -34,7 +34,7 @@ class LoanCreationModel {
     branchID = json["branch_id"];
     branchID = json["total_payable"];
     duration = json["duration"];
-    duration = json["first_payment_date"];
+    firstPaymentDate = json["first_payment_date"];
   }
 
   Map<String, dynamic> toJson() {

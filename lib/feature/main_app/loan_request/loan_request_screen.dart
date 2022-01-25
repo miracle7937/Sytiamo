@@ -11,6 +11,7 @@ import 'package:sytiamo/data/local/prefs.dart';
 import 'package:sytiamo/data/model/responseModel/loan_product_response.dart';
 import 'package:sytiamo/data/model/responseModel/location_response.dart';
 import 'package:sytiamo/utils/abstract_view.dart';
+import 'package:sytiamo/utils/colors.dart';
 import 'package:sytiamo/utils/navigator_helper.dart';
 
 class LoanRequestScreen extends StatefulWidget {
@@ -49,6 +50,8 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
           scaffoldKey: _scaffoldKey,
           state: AppState(pageState: settingsController.pageState),
           appBar: SYAppBar(
+            backgroundColor: mainColor,
+            iconTheme: IconThemeData(color: whiteColor),
             title: Text(
               "Loan Request",
             ),
@@ -100,7 +103,7 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
                         .toList(),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
                   settingsController.selectedLocationModel != null
                       ? InkWell(
@@ -111,7 +114,6 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
                                         .toString())
                                 .then((value) {
                               print(value);
-                              settingsController.selectedCustomer = value;
                             });
                           },
                           child: SYTitleForm(
@@ -125,10 +127,10 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
                         )
                       : Container(),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   SYDropDown<LoanModel>(
-                    hintDescription: "Duration",
+                    hintDescription: "Loan Type",
                     value: settingsController.selectedLoanModel,
                     onChange: (v) {
                       settingsController.onSelectLoanDuration(v);
@@ -143,10 +145,6 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
                                   child: Row(
                                     children: [
                                       Text("${e.name}"),
-                                      Spacer(),
-                                      Text(
-                                        "  ${e.term} weeks",
-                                      )
                                     ],
                                   )),
                             )
@@ -154,7 +152,27 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
                         : [],
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
+                  ),
+                  SYDropDown<int>(
+                      hintDescription: "Loan Duration",
+                      value: settingsController.durationValue,
+                      onChange: (v) {
+                        settingsController.onSelectDuration(v);
+                      },
+
+                      // hint: Text("Identity Method"),
+                      items: settingsController.durationsToSelect
+                          .map(
+                            (e) => DropdownMenuItem(
+                                value: e,
+                                child: Text(
+                                  "${e.toString()} weeks",
+                                )),
+                          )
+                          .toList()),
+                  SizedBox(
+                    height: 10,
                   ),
                   SYTitleForm(
                     hintStyle: TextStyle(color: Colors.black),
@@ -166,7 +184,7 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
                     keyboardType: TextInputType.number,
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Text(
                     "Total with Interest",
@@ -196,6 +214,9 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
                     callback: () {
                       settingsController.saveLoanRequest();
                     },
+                  ),
+                  SizedBox(
+                    height: 20,
                   )
                 ],
               ),

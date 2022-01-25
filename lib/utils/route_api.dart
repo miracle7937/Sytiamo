@@ -14,4 +14,5 @@ class Routes {
   static String ticket = "$baseURL/support_tickets";
   static String userLoanBreakdown = "$baseURL/breakdown";
   static String loanDetail = "$baseURL/loanrepay/loandetails";
+  static String userByMarketID = "$baseURL/userapi/userBylocation";
 }
