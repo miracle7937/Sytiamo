@@ -42,9 +42,14 @@ class SettingsController extends ChangeNotifier {
   List<LocationModel> _locations;
 
   String _title, _message;
-
-  List<int> durationsToSelect = [4, 8, 10, 12];
-  int durationValue;
+  //{index, week}
+  List<Map<int, int>> durationsToSelect = [
+    {1: 4},
+    {2: 8},
+    {3: 12},
+    {4: 16}
+  ];
+  Map<int, int> durationValue;
 
   // set selectedCustomer(v) {
   //   _selectedCustomer = v;
@@ -66,12 +71,6 @@ class SettingsController extends ChangeNotifier {
 
   onSelectLocation(v) {
     _selectedLocationModel = v;
-    notifyListeners();
-  }
-
-  onSelectDuration(v) {
-    durationValue = v;
-    loanCreationModel.duration = v.toString();
     notifyListeners();
   }
 
@@ -167,12 +166,25 @@ class SettingsController extends ChangeNotifier {
     }
   }
 
-  onSelectLoanDuration(LoanModel loanModel) {
-    loanAmount = loanModel.maximumAmount;
+  setLoanType(LoanModel loanModel) {
     _selectedLoanModel = loanModel;
-    double loanAm = double.tryParse(loanModel.maximumAmount);
-    double interest = double.tryParse(loanModel.interestRate);
-    amountToPay = (loanAm + ((interest * loanAm) / 100)).toStringAsFixed(0);
+    durationValue = null;
+    amountToPay = null;
+    loanAmount = null;
+    notifyListeners();
+  }
+
+  onSelectLoanDuration(Map<int, int> values) {
+    print(values.keys.first);
+    int multiplier =
+        values.keys.first; //use to key multiplier of the loan base on duration
+    durationValue = values;
+    loanCreationModel.duration = values.values.first.toString();
+    loanAmount = _selectedLoanModel.maximumAmount;
+    double loanAm = double.tryParse(_selectedLoanModel.maximumAmount);
+    double interest = double.tryParse(_selectedLoanModel.interestRate);
+    amountToPay = (loanAm + (((interest * multiplier) * loanAm) / 100))
+        .toStringAsFixed(0);
     print(_selectedLoanModel.id);
     notifyListeners();
   }

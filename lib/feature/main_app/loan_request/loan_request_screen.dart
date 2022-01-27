@@ -129,13 +129,24 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
                   SizedBox(
                     height: 10,
                   ),
-                  SYDropDown<LoanModel>(
-                    hintDescription: "Loan Type",
+                  SYDropdownButton<LoanModel>(
+                    itemsListTitle: "Loan Type",
+                    iconSize: 22,
                     value: settingsController.selectedLoanModel,
-                    onChange: (v) {
-                      settingsController.onSelectLoanDuration(v);
+                    hint: Text(
+                      "",
+                    ),
+                    isExpanded: true,
+                    underline: Container(
+                      height: 2,
+                      color: Colors.black,
+                    ),
+                    searchMatcher: (item, text) {
+                      return item.name.toLowerCase().contains(text);
                     },
-
+                    onChanged: (v) {
+                      settingsController.setLoanType(v);
+                    },
                     // hint: Text("Identity Method"),
                     items: settingsController.loanProduct?.data != null
                         ? settingsController.loanProduct.data
@@ -154,23 +165,25 @@ class _LoanRequestScreenState extends State<LoanRequestScreen> with AdsView {
                   SizedBox(
                     height: 10,
                   ),
-                  SYDropDown<int>(
-                      hintDescription: "Loan Duration",
-                      value: settingsController.durationValue,
-                      onChange: (v) {
-                        settingsController.onSelectDuration(v);
-                      },
+                  settingsController.selectedLoanModel != null
+                      ? SYDropDown<Map<int, int>>(
+                          hintDescription: "Loan Duration",
+                          value: settingsController.durationValue,
+                          onChange: (v) {
+                            settingsController.onSelectLoanDuration(v);
+                          },
 
-                      // hint: Text("Identity Method"),
-                      items: settingsController.durationsToSelect
-                          .map(
-                            (e) => DropdownMenuItem(
-                                value: e,
-                                child: Text(
-                                  "${e.toString()} weeks",
-                                )),
-                          )
-                          .toList()),
+                          // hint: Text("Identity Method"),
+                          items: settingsController.durationsToSelect
+                              .map(
+                                (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Text(
+                                      "${e.values.first} weeks",
+                                    )),
+                              )
+                              .toList())
+                      : Container(),
                   SizedBox(
                     height: 10,
                   ),
