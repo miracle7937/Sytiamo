@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -56,20 +57,17 @@ class ServerData {
     var header = await getHeader();
 
     try {
-      var response =
-          await http.post(path, body: json.encode(body), headers: header);
+      var response = await http
+          .post(path, body: json.encode(body), headers: header)
+          .timeout(const Duration(seconds: 20), onTimeout: () {
+        throw TimeoutException(
+            'The connection has timed out, Please try again!');
+      });
       var data = jsonDecode(response.body);
 
       print("$data  route: $path");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        if (saveXCode) {
-          // saveUserIdentifier(response.headers['x-cod']);
-          print("${response.headers['x-cod']}popo");
-        }
-        print(response.headers['x-cod']);
-        print("cool$data");
-
         return HttpData(data);
       } else {
         print("oops");
@@ -81,8 +79,16 @@ class ServerData {
         // return HttpException({"message": data, "error": true});
       }
     } catch (e) {
+      print(e + "MYEX");
       print('exception post $e');
-      return HttpException(
+      if (e is TimeoutException) {
+        throw HttpException({"message": e.message, "error": true});
+      }
+      if (e is SocketException) {
+        throw HttpException(
+            {"message": "Network not available", "error": true});
+      }
+      throw HttpException(
           {"message": 'something wrong happened', "error": true});
     }
   }

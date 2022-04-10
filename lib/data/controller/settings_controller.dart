@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:sytiamo/data/http.dart';
 import 'package:sytiamo/data/local/prefs.dart';
 import 'package:sytiamo/data/model/responseModel/customer_search_response.dart';
 import 'package:sytiamo/data/model/responseModel/loan_product_response.dart';
@@ -41,7 +42,7 @@ class SettingsController extends ChangeNotifier {
   List<LocationModel> get locations => _locations;
   List<LocationModel> _locations;
 
-  String _title, _message;
+  String title, message;
   //{index, week}
   List<Map<int, int>> durationsToSelect = [
     {1: 4},
@@ -242,24 +243,27 @@ class SettingsController extends ChangeNotifier {
     }).catchError((e) {
       pageState = PageState.loaded;
       notifyListeners();
-      adsView.onError("error occurred");
-      print(e);
+      if (e is HttpException) {
+        adsView.onError(e.data["message"]);
+      } else {
+        adsView.onError("error occurred");
+      }
     });
   }
 
   set setTitle(v) {
-    _title = v;
+    title = v;
   }
 
   set setMessage(v) {
-    _message = v;
+    message = v;
   }
 
   summitTicket() async {
     int userId = await Pref.geUserID();
     var map = {
-      "subject": _title,
-      "message": _message,
+      "subject": title,
+      "message": message,
       "status": "1",
       "created_user_id": userId.toString(),
       "user_id": _selectedCustomer.id.toString()
@@ -284,15 +288,19 @@ class SettingsController extends ChangeNotifier {
     }).catchError((v) {
       pageState = PageState.loaded;
       notifyListeners();
-      adsView.onError("error occurred");
+      if (v is HttpException) {
+        adsView.onError(v.data["message"]);
+      } else {
+        adsView.onError("error occurred");
+      }
     });
   }
 
   ticketValidation() {
     errorForm.clear();
     errorForm.addAll([
-      _title == null ? "Add title to the ticket" : null,
-      _message == null ? "Ticket message should not be empty" : null,
+      title == null ? "Add title to the ticket" : null,
+      message == null ? "Ticket message should not be empty" : null,
       selectedCustomer.id == null ? "Select the customer " : null,
     ]);
   }

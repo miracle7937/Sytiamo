@@ -15,4 +15,6 @@ class Routes {
   static String userLoanBreakdown = "$baseURL/breakdown";
   static String loanDetail = "$baseURL/loanrepay/loandetails";
   static String userByMarketID = "$baseURL/userapi/userBylocation";
+  static String notificationURL = "$baseURL/messagebylocation";
+  static String notificationUpdate = "$baseURL/updatemessage";
 }

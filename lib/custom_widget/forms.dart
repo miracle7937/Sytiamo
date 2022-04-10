@@ -264,7 +264,7 @@ class SYTitleForm extends StatefulWidget {
       this.enabledBorderColor,
       this.disabledBorderColor,
       this.title,
-      this.setValue,
+      this.setValue = "",
       this.maxLines,
       this.formHeight})
       : super(key: key);
@@ -276,9 +276,12 @@ class SYTitleForm extends StatefulWidget {
 class _CXTitleFormState extends State<SYTitleForm> {
   bool showPassword = true;
   TextEditingController controller;
+
   @override
   void initState() {
     controller = widget.controller ?? TextEditingController();
+    controller.text = widget.setValue;
+
     super.initState();
   }
 
@@ -303,12 +306,13 @@ class _CXTitleFormState extends State<SYTitleForm> {
             height: widget.formHeight ?? 49,
             child: TextFormField(
               maxLines: widget.maxLines ?? 1,
-              initialValue: widget.setValue,
               inputFormatters: widget.inputFormatters,
               keyboardType: widget.keyboardType,
-              controller: widget.controller,
+              controller: controller,
               enabled: widget.enable,
-              onChanged: widget.onChange,
+              onChanged: (v) {
+                widget.onChange(v);
+              },
               cursorColor: mainColor,
               obscureText: widget.forPassword,
               style: TextStyle(fontSize: 16),

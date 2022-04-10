@@ -42,12 +42,46 @@ class DashBoard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          greetingMessage(),
-                          style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                        Row(
+                          children: [
+                            Text(
+                              greetingMessage(),
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                            Spacer(),
+                            // InkWell(
+                            //   onTap: () {
+                            //     Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (_) =>
+                            //                 NotificationListScreen()));
+                            //   },
+                            //   child: Stack(
+                            //     children: [
+                            //       Icon(
+                            //         Icons.notifications,
+                            //         size: 35,
+                            //       ),
+                            //       Container(
+                            //         decoration: BoxDecoration(
+                            //             color: Colors.red,
+                            //             shape: BoxShape.circle),
+                            //         child: Padding(
+                            //           padding: EdgeInsets.all(5),
+                            //           child: Text(
+                            //             "2",
+                            //             style: TextStyle(color: Colors.white),
+                            //           ),
+                            //         ),
+                            //       )
+                            //     ],
+                            //   ),
+                            // )
+                          ],
                         ),
                         Row(
                           children: [

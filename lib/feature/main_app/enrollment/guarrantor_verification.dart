@@ -13,6 +13,7 @@ import 'package:sytiamo/utils/abstract_view.dart';
 import 'package:sytiamo/utils/colors.dart';
 import 'package:sytiamo/utils/images.dart';
 import 'package:sytiamo/utils/navigations.dart';
+import 'package:sytiamo/utils/string_helper.dart';
 
 class GuarantorVerification extends StatefulWidget {
   @override
@@ -71,20 +72,25 @@ class _GuarantorVerificationState extends State<GuarantorVerification>
                   height: 15,
                 ),
                 SYTitleForm(
+                  setValue: controller.enrollmentModel.gname,
                   onChange: (v) => controller.guarantor1 = v,
                   title: "Name",
                 ),
                 SYTitleForm(
-                  setValue: "+234",
+                  setValue: isNotEmpty(controller.enrollmentModel.gphone)
+                      ? controller.enrollmentModel.gphone
+                      : "+234",
                   keyboardType: TextInputType.phone,
                   onChange: (v) => controller.guarantorPhoneNumber1 = v,
                   title: "Phone Number",
                 ),
                 SYTitleForm(
+                  setValue: controller.enrollmentModel.gaddress,
                   onChange: (v) => controller.guarantorAddress1 = v,
                   title: "Address",
                 ),
                 SYTitleForm(
+                  setValue: controller.enrollmentModel.guarantorBusStop1,
                   onChange: (v) => controller.guarantorBusStop1 = v,
                   title: "Nearest bus stop",
                 ),

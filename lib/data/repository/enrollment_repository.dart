@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:path/path.dart';
+import 'package:sytiamo/data/http.dart';
 import 'package:sytiamo/data/model/setModel/enrollment_model.dart';
 import 'package:sytiamo/utils/route_api.dart';
 
@@ -72,7 +75,15 @@ class EnrollmentRepo {
 
       return json.decode(data.body);
     } catch (e) {
-      print(e);
+      if (e is TimeoutException) {
+        throw HttpException({"message": e.message, "error": true});
+      }
+      if (e is SocketException) {
+        throw HttpException(
+            {"message": "Network not available", "error": true});
+      }
+      throw HttpException(
+          {"message": 'something wrong happened', "error": true});
     }
   }
 }

@@ -167,18 +167,40 @@ class _PersonalVerificationState extends State<PersonalVerification>
                                 )),
                           )
                           .toList()),
-                  SYTitleForm(
-                    onChange: (v) {
-                      enrollController.bankAccount = v;
-                    },
-                    title: "Bank Account (Optional)",
+                  SizedBox(
+                    height: 20,
                   ),
-                  SYTitleForm(
+                  SYDropDown<String>(
+                    hintDescription: "Select Identification",
+                    value: enrollController.identification,
                     onChange: (v) {
-                      enrollController.setBVN = v;
+                      enrollController.identificationMethod = v;
                     },
-                    title: "BVN (Optional)",
-                    keyboardType: TextInputType.phone,
+                    // hint: Text("Identity Method"),
+                    items: ["BVN", "NIN"]
+                        .map(
+                          (e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(
+                                e,
+                              )),
+                        )
+                        .toList(),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Visibility(
+                    visible: enrollController.identification != null,
+                    child: SYTitleForm(
+                      onChange: (v) {
+                        enrollController.identification == "BVN"
+                            ? enrollController.setBVN = v
+                            : enrollController.setNIN = v;
+                      },
+                      title: "Enter ${enrollController.identification}",
+                      keyboardType: TextInputType.phone,
+                    ),
                   ),
                   SizedBox(
                     height: 15,

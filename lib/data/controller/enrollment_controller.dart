@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sytiamo/data/http.dart';
 import 'package:sytiamo/data/model/responseModel/location_response.dart';
 import 'package:sytiamo/data/model/setModel/enrollment_model.dart';
 import 'package:sytiamo/data/repository/enrollment_repository.dart';
@@ -20,9 +21,15 @@ class EnrollmentController with ChangeNotifier {
   LocationModel selectedLocationModel;
   PageState pageState = PageState.loaded;
   File selectedImage, guarantorImageOrFile;
+  String identification;
   List<String> errorForm = [];
   set setView(view) {
     adsView = view;
+  }
+
+  set identificationMethod(String value) {
+    identification = value;
+    notifyListeners();
   }
 
   set setPersonalVerify(view) {
@@ -82,6 +89,10 @@ class EnrollmentController with ChangeNotifier {
 
   set setBVN(v) {
     enrollmentModel.bvn = v;
+  }
+
+  set setNIN(v) {
+    enrollmentModel.nin = v;
   }
 
   set location(LocationModel v) {
@@ -169,10 +180,14 @@ class EnrollmentController with ChangeNotifier {
       }
       pageState = PageState.loaded;
       notifyListeners();
-    }).catchError((v) {
-      guarantorVeriView.onError("error occurs");
+    }).catchError((e) {
       pageState = PageState.loaded;
       notifyListeners();
+      if (e is HttpException) {
+        guarantorVeriView.onError(e.data["message"]);
+      } else {
+        guarantorVeriView.onError("error occurred");
+      }
     });
   }
 
@@ -223,6 +238,9 @@ class EnrollmentController with ChangeNotifier {
           : null,
       enrollmentModel.branchId == null
           ? "Market field can not be Empty "
+          : null,
+      (enrollmentModel.bvn == null && enrollmentModel.nin == null)
+          ? "your BVN or NIN is required"
           : null,
     ]);
   }

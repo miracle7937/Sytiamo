@@ -59,12 +59,14 @@ class _LoginScreenState extends State<LoginScreen> with AdsView {
                   height: 50,
                 ),
                 SYTitleForm(
+                  setValue: authController.authModel.email,
                   title: "Email",
                   onChange: (v) {
                     authController.setEmail = v;
                   },
                 ),
                 SYTitleForm(
+                  setValue: authController.authModel.password,
                   title: "Password",
                   forPassword: true,
                   onChange: (v) => authController.setPassword = v,

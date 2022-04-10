@@ -8,6 +8,7 @@ class EnrollmentModel {
   String email;
   String phone;
   String bvn;
+  String nin;
   String address;
   String shopAddress;
   String dob;
@@ -41,6 +42,7 @@ class EnrollmentModel {
       this.email,
       this.phone,
       this.bvn,
+      this.nin,
       this.address,
       this.shopAddress,
       this.dob,
@@ -67,6 +69,7 @@ class EnrollmentModel {
     email = json['email'];
     phone = json['phone'];
     bvn = json['bvn'];
+    nin = json['nin'];
     address = json['address'];
     shopAddress = json['shop_address'];
     dob = json['dob'];
@@ -99,6 +102,7 @@ class EnrollmentModel {
     data['email'] = this.email;
     data['phone'] = this.phone;
     data['bvn'] = this.bvn;
+    data['nin'] = this.nin;
     data['address'] = this.address;
     data['shop_address'] = this.shopAddress;
     data['dob'] = this.dob;

@@ -106,10 +106,12 @@ class _TicketScreenState extends State<TicketScreen> with AdsView {
                         )
                       : Container(),
                   SYTitleForm(
+                    setValue: settingsController.title,
                     title: "subject",
                     onChange: (v) => settingsController.setTitle = v,
                   ),
                   SYTitleForm(
+                    setValue: settingsController.message,
                     maxLines: 5,
                     onChange: (v) => settingsController.setMessage = v,
                     formHeight: MediaQuery.of(context).size.height * 0.3,
