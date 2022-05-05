@@ -1,9 +1,6 @@
-
-
-
 import 'dart:ui';
 
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sytiamo/custom_widget/multi_floating_action_button.dart';
 import 'package:sytiamo/custom_widget/sy_appBar.dart';
@@ -70,7 +67,7 @@ class SYScaffold extends StatefulWidget {
 
   static SYScaffoldState of(BuildContext context, {bool nullOk = false}) {
     final SYScaffoldState result =
-        context.ancestorStateOfType(const TypeMatcher<SYScaffoldState>());
+        context.findAncestorStateOfType<SYScaffoldState>();
     return result;
   }
 
