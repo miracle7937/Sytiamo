@@ -32,7 +32,9 @@ Future<void> showSnackbar(String text, BuildContext context,
     Color textColor,
     Color backgroundColor,
     hide = true,
-    Duration duration}) {
+    Duration duration,
+    String actionText,
+    VoidCallback callback}) {
   final snackBar = SnackBar(
     content: Row(
       children: [

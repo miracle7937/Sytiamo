@@ -390,11 +390,10 @@ class CXDateForm extends StatefulWidget {
 
 class _CXDateFormState extends State<CXDateForm> {
   bool showPassword = true;
-  final _controller = TextEditingController();
+  TextEditingController _controller;
 
   @override
   void dispose() {
-    // other dispose methods
     _controller.dispose();
     super.dispose();
   }
@@ -402,11 +401,13 @@ class _CXDateFormState extends State<CXDateForm> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(_handleText);
+    _handleText();
+    // _controller.addListener(_handleText);
     // other code here
   }
 
   _handleText() {
+    _controller = widget.controller ?? TextEditingController();
     // do what you want with the text, for example:
     _controller.text = widget.setValue;
   }
@@ -449,7 +450,7 @@ class _CXDateFormState extends State<CXDateForm> {
               child: TextFormField(
                 inputFormatters: widget.inputFormatters,
                 keyboardType: widget.keyboardType,
-                controller: widget.controller ?? _controller,
+                controller: _controller,
                 enabled: false,
                 onChanged: widget.onChange,
                 cursorColor: mainColor,

@@ -59,7 +59,7 @@ class ServerData {
     try {
       var response = await http
           .post(path, body: json.encode(body), headers: header)
-          .timeout(const Duration(seconds: 20), onTimeout: () {
+          .timeout(const Duration(minutes: 2), onTimeout: () {
         throw TimeoutException(
             'The connection has timed out, Please try again!');
       });

@@ -54,4 +54,12 @@ class SettingRepo {
 
     return TicketResponse.fromJson(responseData.data);
   }
+
+  Future<Map> updateCustomer(Map map, id) async {
+    var responseData = await _serverData.postData(null,
+        body: map, path: Routes.getEditUserRoute(id));
+    print(responseData.data);
+
+    return responseData.data;
+  }
 }

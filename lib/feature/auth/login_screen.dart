@@ -80,7 +80,11 @@ class _LoginScreenState extends State<LoginScreen> with AdsView {
                   callback: () {
                     authController.loginUser();
                   },
-                )
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Version V1.2.0")
               ],
             ),
           );

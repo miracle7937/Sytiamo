@@ -155,6 +155,8 @@ class _UserSearchScreenState extends State<UserSearchScreen>
                               selector.add(SelectorModel(
                                   key: "Phone Number:", value: model.phone));
                               selector.add(SelectorModel(
+                                  key: "Date of birth:", value: model.dob));
+                              selector.add(SelectorModel(
                                   key: "address: ", value: model.address));
                               selector.add(SelectorModel(
                                   key: "shop address:",
@@ -168,8 +170,9 @@ class _UserSearchScreenState extends State<UserSearchScreen>
                               selector.add(SelectorModel(
                                   key: "Guarantor phone number:",
                                   value: model.gphone));
+
                               showIVListActionBottomSheet(context,
-                                  data: selector, callback: () {
+                                  data: selector, model: model, callback: () {
                                 settingsController.selectedCustomerPage(
                                     settingsController.listOfCustomer[index]);
 

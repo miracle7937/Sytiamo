@@ -10,6 +10,9 @@ import 'package:sytiamo/data/controller/request_loan_controller.dart';
 import 'package:sytiamo/feature/auth/login_screen.dart';
 
 import 'data/controller/settings_controller.dart';
+import 'data/controller/update_usercontroller.dart';
+import 'data/local/prefs.dart';
+import 'feature/main_app/dash_board.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,6 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RequestLoanController()),
         ChangeNotifierProvider(create: (_) => LoanCollectionController()),
         ChangeNotifierProvider(create: (_) => ReportCollectionController()),
+        ChangeNotifierProvider(create: (_) => UpdateUserController()),
       ],
       child: MaterialApp(
         title: 'Sytiamo',
@@ -48,12 +52,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int userId;
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+    getUser();
     super.initState();
+  }
+
+  getUser() async {
+    userId = await Pref.geUserID();
   }
 
   @override
@@ -67,6 +77,10 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (
           context,
         ) {
+          if (userId != null) {
+            return DashBoard();
+          }
+
           return LoginScreen();
         });
   }

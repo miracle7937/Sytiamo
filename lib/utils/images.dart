@@ -17,6 +17,7 @@ class SYImages {
   static String agent = "$root/agent.gif";
   static String phoneIcon = "$root/phone_icon.jpeg";
   static String logo = "$root/logo.png";
+  static String logout = "$root/logout.png";
   static String success = "$root/success.gif";
   static String error = "$root/error.gif";
 }
