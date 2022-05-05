@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sytiamo/custom_widget/button.dart';
+import 'package:sytiamo/data/model/responseModel/customer_search_response.dart';
 import 'package:sytiamo/data/model/selectorModel.dart';
+import 'package:sytiamo/feature/main_app/update_customer.dart';
 import 'package:sytiamo/utils/images.dart';
 
 _createExtensibleDialogWidget(
@@ -247,7 +249,10 @@ Future<void> showStatusBottomSheet(BuildContext context,
 }
 
 Future<void> showIVListActionBottomSheet(BuildContext context,
-    {String title, List<SelectorModel> data, VoidCallback callback}) {
+    {String title,
+    List<SelectorModel> data,
+    VoidCallback callback,
+    CustomerModel model}) {
   return showModalBottomSheet(
     backgroundColor: Colors.transparent,
     shape: RoundedRectangleBorder(
@@ -321,6 +326,22 @@ Future<void> showIVListActionBottomSheet(BuildContext context,
                 color: Colors.grey,
                 callback: () {
                   Navigator.of(context).pop();
+                },
+              ),
+
+              SizedBox(
+                height: 20,
+              ),
+              SYButton(
+                title: "Update",
+                color: Colors.grey,
+                callback: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => UpdateCustomerScreen(
+                                model: model,
+                              )));
                 },
               ),
               Padding(

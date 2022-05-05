@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sytiamo/custom_widget/sy_scaffold.dart';
+import 'package:sytiamo/custom_widget/sy_snackbar.dart';
 import 'package:sytiamo/data/local/prefs.dart';
 import 'package:sytiamo/data/model/responseModel/location_response.dart';
 import 'package:sytiamo/feature/auth/user_search_screen.dart';
@@ -258,6 +260,23 @@ class DashBoard extends StatelessWidget {
                       },
                     ),
                     Spacer(),
+                    CardView(
+                      title: "Log out",
+                      image: SYImages.logout,
+                      onTap: () async {
+                        showSnackbar("Tap on yes to sign out", context,
+                            action: SnackBarAction(
+                              label: "YES",
+                              onPressed: () async {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.remove("userData");
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, '/', (_) => false);
+                              },
+                            ));
+                      },
+                    ),
                   ],
                 ),
                 Spacer(
@@ -285,7 +304,11 @@ class CardView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(image),
+            SizedBox(
+              height: 50,
+              width: 50,
+              child: Image.asset(image),
+            ),
             SizedBox(
               height: 10,
             ),

@@ -17,4 +17,7 @@ class Routes {
   static String userByMarketID = "$baseURL/userapi/userBylocation";
   static String notificationURL = "$baseURL/messagebylocation";
   static String notificationUpdate = "$baseURL/updatemessage";
+
+  static String getEditUserRoute(id) =>
+      "https://www.sytiamoportal.com/api/userapi/$id";
 }
