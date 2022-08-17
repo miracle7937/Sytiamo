@@ -1,7 +1,7 @@
-import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+
+import 'package:intl/intl.dart';
 
 moneyFormatter(String money) {
-  FlutterMoneyFormatter fmf =
-      FlutterMoneyFormatter(amount: double.tryParse(money));
-  return fmf.output.nonSymbol;
+  final oCcy = NumberFormat("#,###", "en_US");
+  return oCcy.format(money);
 }

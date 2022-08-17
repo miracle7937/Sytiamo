@@ -176,7 +176,7 @@ class EnrollmentController with ChangeNotifier {
       if (value["status"] == true) {
         guarantorVeriView.onSuccess("User enrollment  successful");
       } else {
-        guarantorVeriView.onError("Enrollment request fails");
+        guarantorVeriView.onError(value["error"]);
       }
       pageState = PageState.loaded;
       notifyListeners();
