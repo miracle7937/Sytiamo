@@ -31,8 +31,19 @@ class EnrollmentModel {
   String guarantorBusStop1;
   String guarantorBusStop2;
 
+  //bank verification
+  // String account_number;
+  // String acc_name;
+  // String bank_code;
+  String accountNumber;
+  String accName;
+  String bankCode;
+
   EnrollmentModel(
       {this.id,
+      this.accountNumber,
+      this.accName,
+      this.bankCode,
       this.guarantorBusStop1,
       this.guarantorBusStop2,
       this.profilePicture,
@@ -62,6 +73,9 @@ class EnrollmentModel {
       this.shopBusStop});
 
   EnrollmentModel.fromJson(Map<String, dynamic> json) {
+    accountNumber = json["account_number"];
+    accName = json["acc_name"];
+    bankCode = json["bank_code"];
     id = json['id'];
     firstName = json['first_name'];
     middleName = json['middle_name'];
@@ -124,6 +138,10 @@ class EnrollmentModel {
     data['g2bus_stop'] = this.guarantorBusStop2;
     data['profile_picture'] = this.profilePicture;
     data['gpicture'] = this.gpicture;
+    data['account_number'] = this.accountNumber;
+    data['acc_name'] = this.accName;
+    data['bank_code'] = this.bankCode;
+
     return data;
   }
 }

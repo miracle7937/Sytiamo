@@ -9,6 +9,7 @@ import 'package:sytiamo/data/controller/reportController.dart';
 import 'package:sytiamo/data/controller/request_loan_controller.dart';
 import 'package:sytiamo/feature/auth/login_screen.dart';
 
+import 'data/controller/bank_verification_controller.dart';
 import 'data/controller/settings_controller.dart';
 import 'data/controller/update_usercontroller.dart';
 import 'data/local/prefs.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoanCollectionController()),
         ChangeNotifierProvider(create: (_) => ReportCollectionController()),
         ChangeNotifierProvider(create: (_) => UpdateUserController()),
+        ChangeNotifierProvider(create: (_) => BankVerificationController()),
       ],
       child: MaterialApp(
         title: 'Sytiamo',

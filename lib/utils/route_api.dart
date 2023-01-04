@@ -9,6 +9,8 @@ class Routes {
   static String getBreakdown(String id) => "$baseURL/loanrepay/paid/$id";
   static String runningLoan = "$baseURL/loanrepay/loancollect";
   static String agentRepayment = "$baseURL/loanrepay/createrepay";
+  static String getBanks = "$baseURL/get-banks";
+  static String verifyAccount = "$baseURL/verify-account";
   static String reportRoute = "$baseURL/loanrepay/report";
   static String smsRoute = "$baseURL/send";
   static String ticket = "$baseURL/support_tickets";

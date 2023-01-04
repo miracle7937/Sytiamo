@@ -10,9 +10,10 @@ import 'package:sytiamo/data/controller/enrollment_controller.dart';
 import 'package:sytiamo/data/controller/settings_controller.dart';
 import 'package:sytiamo/data/local/prefs.dart';
 import 'package:sytiamo/data/model/responseModel/location_response.dart';
-import 'package:sytiamo/feature/main_app/enrollment/Image_verification_screen.dart';
 import 'package:sytiamo/utils/abstract_view.dart';
 import 'package:sytiamo/utils/colors.dart';
+
+import 'bank_verification_screen.dart';
 
 class PersonalVerification extends StatefulWidget {
   @override
@@ -233,6 +234,6 @@ class _PersonalVerificationState extends State<PersonalVerification>
   @override
   void onSuccess(message) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (_) => ImageVerificationScreen()));
+        context, MaterialPageRoute(builder: (_) => BankVerification()));
   }
 }

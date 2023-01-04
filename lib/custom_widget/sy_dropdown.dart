@@ -728,9 +728,7 @@ class _COXDropdownButtonState<T> extends State<SYDropdownButton<T>>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  widget.isExpanded
-                      ? Expanded(child: innerItemsWidget)
-                      : innerItemsWidget,
+                  Expanded(child: innerItemsWidget),
                   IconTheme(
                     data: IconThemeData(
                       color: _iconColor,

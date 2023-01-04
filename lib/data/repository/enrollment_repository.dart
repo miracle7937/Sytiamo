@@ -10,7 +10,23 @@ import 'package:sytiamo/data/http.dart';
 import 'package:sytiamo/data/model/setModel/enrollment_model.dart';
 import 'package:sytiamo/utils/route_api.dart';
 
+import '../model/responseModel/all_bank_response.dart';
+import '../model/responseModel/bank_verification_response.dart';
+
 class EnrollmentRepo {
+  Future<AllBanksResponse> getBanks() async {
+    var responseData = await ServerData().getData(null, path: Routes.getBanks);
+    print(responseData.data);
+    return AllBanksResponse.fromJson(responseData.data);
+  }
+
+  static Future<AccountVerificationResponse> verifyBankAccount(
+      Map<String, dynamic> map) async {
+    var response = await ServerData()
+        .postData(null, path: Routes.verifyAccount, body: map);
+    return AccountVerificationResponse.fromJson(response.data);
+  }
+
   Future createCustomer(EnrollmentModel enrollmentModel) async {
     try {
       var postUri = Uri.parse(Routes.userAPI);
@@ -68,6 +84,11 @@ class EnrollmentRepo {
       request.fields['sbus_stop'] = enrollmentModel.shopBusStop ?? "";
       request.fields['gbus_stop'] = enrollmentModel.guarantorBusStop1 ?? "";
       request.fields['g2bus_stop'] = enrollmentModel.guarantorBusStop2 ?? "";
+      //bank verification
+      request.fields['account_number'] = enrollmentModel.accountNumber ?? "";
+      request.fields['acc_name'] = enrollmentModel.accName ?? "";
+      request.fields['bank_code'] = enrollmentModel.bankCode ?? "";
+
       http.StreamedResponse response = await request.send();
       print(response.statusCode);
       var data = await Response.fromStream(response);

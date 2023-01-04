@@ -3,3 +3,6 @@
 
 8/10/2022 ======================> versionV1.3.1
   - removed sixteen weeks from loan duration
+
+  1/4/2023 ======================> versionV1.3.2
+    - added bank verification to enrollment
