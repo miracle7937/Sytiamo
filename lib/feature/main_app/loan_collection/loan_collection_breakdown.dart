@@ -29,6 +29,13 @@ class _LoanCollectionBreakdownState extends State<LoanCollectionBreakdown>
     with AdsView {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   LoanCollectionController loanCollectionController;
+
+  @override
+  void dispose() {
+    super.dispose();
+    loanCollectionController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     loanCollectionController = Provider.of<LoanCollectionController>(context)
@@ -70,6 +77,9 @@ class _LoanCollectionBreakdownState extends State<LoanCollectionBreakdown>
             children: [
               SizedBox(
                 height: 20,
+              ),
+              Center(
+                child: Text("Pull down to reload page"),
               ),
               SizedBox(
                 height: 20,

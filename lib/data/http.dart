@@ -79,8 +79,6 @@ class ServerData {
         // return HttpException({"message": data, "error": true});
       }
     } catch (e) {
-      print(e + "MYEX");
-      print('exception post $e');
       if (e is TimeoutException) {
         throw HttpException({"message": e.message, "error": true});
       }
@@ -157,6 +155,7 @@ class ServerData {
 
   Future uploadFile(BuildContext context,
       {String path, Map body, File file, imageKey}) async {
+    print("$body  route: $path");
     var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
     var length = await file.length();
     final header = await getHeader();

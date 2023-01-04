@@ -51,8 +51,7 @@ class SYButton extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   child: CircularProgressIndicator(
                       strokeWidth: 3,
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Colors.black87)),
+                      valueColor: AlwaysStoppedAnimation<Color>(mainColor)),
                 ),
         ),
       ),

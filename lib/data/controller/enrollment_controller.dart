@@ -135,6 +135,20 @@ class EnrollmentController with ChangeNotifier {
     enrollmentModel.guarantorBusStop2 = v;
   }
 
+  //bank verification
+
+  set setAccountNumber(v) {
+    enrollmentModel.accountNumber = v;
+  }
+
+  set setAccountName(v) {
+    enrollmentModel.accName = v;
+  }
+
+  set setBankCode(v) {
+    enrollmentModel.bankCode = v;
+  }
+
   Future getImage(ImageSource imageSource, {forUser = true}) async {
     try {
       final ImagePicker _picker = ImagePicker();
@@ -176,7 +190,7 @@ class EnrollmentController with ChangeNotifier {
       if (value["status"] == true) {
         guarantorVeriView.onSuccess("User enrollment  successful");
       } else {
-        guarantorVeriView.onError("Enrollment request fails");
+        guarantorVeriView.onError(value["error"]);
       }
       pageState = PageState.loaded;
       notifyListeners();

@@ -184,6 +184,10 @@ class LoanCollectionController extends ChangeNotifier {
     amountToBePaid = null;
     agentPassword = null;
   }
+
+  clear() {
+    _repayments = null;
+  }
 }
 
 abstract class OnSubmitPayment {
