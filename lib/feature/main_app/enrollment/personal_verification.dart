@@ -6,6 +6,7 @@ import 'package:sytiamo/custom_widget/sy_appBar.dart';
 import 'package:sytiamo/custom_widget/sy_dropdown.dart';
 import 'package:sytiamo/custom_widget/sy_scaffold.dart';
 import 'package:sytiamo/custom_widget/sy_snackbar.dart';
+import 'package:sytiamo/data/controller/bank_verification_controller.dart';
 import 'package:sytiamo/data/controller/enrollment_controller.dart';
 import 'package:sytiamo/data/controller/settings_controller.dart';
 import 'package:sytiamo/data/local/prefs.dart';
@@ -234,6 +235,10 @@ class _PersonalVerificationState extends State<PersonalVerification>
   @override
   void onSuccess(message) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (_) => BankVerification()));
+        context,
+        MaterialPageRoute(
+            builder: (_) => BankVerification(
+                  bankEnum: BankEnum.registration,
+                )));
   }
 }

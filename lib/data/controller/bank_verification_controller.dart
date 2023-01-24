@@ -67,15 +67,52 @@ class BankVerificationController extends ChangeNotifier {
       }).catchError((onError) {
         pageState = PageState.loaded;
         notifyListeners();
+        _banksDetailView.onError(onError.data["message"]);
+      });
+    } else {
+      _banksDetailView.onError("Ensure no empty field(s) ");
+    }
+  }
+
+  updateUserAccount(String userIdToBeUpdate) async {
+    print(accountName);
+    if (isNotEmpty(selectedBankData?.code) && isNotEmpty(accountNumber)) {
+      pageState = PageState.loading;
+      notifyListeners();
+      var map = <String, dynamic>{};
+      map["account_number"] = accountNumber;
+      map["bank_name"] = selectedBankData?.name;
+      map["acc_name"] = accountName;
+      map["id"] = userIdToBeUpdate;
+      EnrollmentRepo.updateBankAccount(map).then((value) {
+        if (value.status == true) {
+          _banksDetailView.onUpdateAccount("User account updated");
+        } else {
+          _banksDetailView.onError(value.message ?? "");
+        }
+        pageState = PageState.loaded;
+        notifyListeners();
+      }).catchError((onError) {
+        pageState = PageState.loaded;
+        notifyListeners();
         _banksDetailView.onError(onError.toString());
       });
     } else {
       _banksDetailView.onError("Ensure no empty field(s) ");
     }
   }
+
+  clear() {
+    accountNumber = null;
+    accountName = null;
+    selectedBankData = null;
+  }
 }
 
 abstract class BanksDetailView {
   onSuccess();
+  onUpdateAccount(String message);
   onError(String message);
 }
+
+enum BankEnum { registration, updateUserDetail }

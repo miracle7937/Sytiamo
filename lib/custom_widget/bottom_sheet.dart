@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sytiamo/custom_widget/button.dart';
+import 'package:sytiamo/data/controller/bank_verification_controller.dart';
 import 'package:sytiamo/data/model/responseModel/customer_search_response.dart';
 import 'package:sytiamo/data/model/selectorModel.dart';
 import 'package:sytiamo/feature/main_app/update_customer.dart';
 import 'package:sytiamo/utils/images.dart';
+
+import '../feature/main_app/enrollment/bank_verification_screen.dart';
+import '../utils/string_helper.dart';
 
 _createExtensibleDialogWidget(
   Widget body, {
@@ -285,12 +289,6 @@ Future<void> showIVListActionBottomSheet(BuildContext context,
               SizedBox(
                 height: 15,
               ),
-              // ListTile(
-              //   leading: Text(e.key.toString()),
-              //   trailing: Text(e.value.toString().isEmpty
-              //       ? "NA"
-              //       : e.value.toString()),
-
               Column(
                   children: data
                       .map((e) => Padding(
@@ -301,7 +299,7 @@ Future<void> showIVListActionBottomSheet(BuildContext context,
                               children: [
                                 Text(e.key.toString()),
                                 Text(
-                                  e.value.toString().isEmpty
+                                  !isNotEmpty(e.value)
                                       ? "NA"
                                       : e.value.toString(),
                                   overflow: TextOverflow.ellipsis,
@@ -321,28 +319,41 @@ Future<void> showIVListActionBottomSheet(BuildContext context,
               SizedBox(
                 height: 20,
               ),
-              SYButton(
-                title: "Cancel",
-                color: Colors.grey,
-                callback: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-
-              SizedBox(
-                height: 20,
-              ),
-              SYButton(
-                title: "Update",
-                color: Colors.grey,
-                callback: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => UpdateCustomerScreen(
-                                model: model,
-                              )));
-                },
+              Row(
+                children: [
+                  Expanded(
+                    child: SYButton(
+                      title: "Update Bank detail",
+                      color: Colors.grey,
+                      callback: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => BankVerification(
+                                      userIdToBeUpdate: model.id.toString(),
+                                      bankEnum: BankEnum.updateUserDetail,
+                                    )));
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: SYButton(
+                      title: "Update Bio data",
+                      color: Colors.grey,
+                      callback: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => UpdateCustomerScreen(
+                                      model: model,
+                                    )));
+                      },
+                    ),
+                  ),
+                ],
               ),
               Padding(
                 padding: EdgeInsets.only(

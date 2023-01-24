@@ -12,6 +12,7 @@ import 'package:sytiamo/utils/route_api.dart';
 
 import '../model/responseModel/all_bank_response.dart';
 import '../model/responseModel/bank_verification_response.dart';
+import '../model/responseModel/generic_response.dart';
 
 class EnrollmentRepo {
   Future<AllBanksResponse> getBanks() async {
@@ -25,6 +26,13 @@ class EnrollmentRepo {
     var response = await ServerData()
         .postData(null, path: Routes.verifyAccount, body: map);
     return AccountVerificationResponse.fromJson(response.data);
+  }
+
+  static Future<GenericResponse> updateBankAccount(
+      Map<String, dynamic> map) async {
+    var response =
+        await ServerData().postData(null, path: Routes.updateBank, body: map);
+    return GenericResponse.fromJson(response.data);
   }
 
   Future createCustomer(EnrollmentModel enrollmentModel) async {
@@ -87,7 +95,7 @@ class EnrollmentRepo {
       //bank verification
       request.fields['account_number'] = enrollmentModel.accountNumber ?? "";
       request.fields['acc_name'] = enrollmentModel.accName ?? "";
-      request.fields['bank_code'] = enrollmentModel.bankCode ?? "";
+      request.fields['bank_code'] = enrollmentModel.bankName ?? "";
 
       http.StreamedResponse response = await request.send();
       print(response.statusCode);

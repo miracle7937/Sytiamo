@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> with AdsView {
                 SizedBox(
                   height: 10,
                 ),
-                Text("Version V1.3.2")
+                Text("Version V1.3.3")
               ],
             ),
           );

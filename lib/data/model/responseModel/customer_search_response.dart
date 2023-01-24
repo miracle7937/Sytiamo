@@ -54,9 +54,15 @@ class CustomerModel {
   String createdAt;
   String updatedAt;
   String accountNo;
+  String accountNumber;
+  String accName;
+  String bankName;
 
   CustomerModel(
       {this.id,
+      this.accountNumber,
+      this.accName,
+      this.bankName,
       this.firstName,
       this.middleName,
       this.email,
@@ -87,6 +93,9 @@ class CustomerModel {
       this.accountNo});
 
   CustomerModel.fromJson(Map<String, dynamic> json) {
+    accountNumber = json["account_number"];
+    accName = json["acc_name"];
+    bankName = json["bank_name"];
     id = json['id'];
     firstName = json['first_name'];
     email = json['email'];
@@ -149,6 +158,9 @@ class CustomerModel {
     data['updated_at'] = this.updatedAt;
     data['account_no'] = this.accountNo;
     data['middle_name'] = this.middleName;
+    data['account_number'] = this.accountNumber;
+    data['acc_name'] = this.accName;
+    data['bank_name'] = this.bankName;
     return data;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sytiamo/feature/main_app/enrollment/Image_verification_screen.dart';
 
@@ -17,7 +18,10 @@ import '../../../utils/page_state_enum.dart';
 import '../../../utils/string_helper.dart';
 
 class BankVerification extends StatefulWidget {
-  const BankVerification({Key key}) : super(key: key);
+  final BankEnum bankEnum;
+  final String userIdToBeUpdate;
+  const BankVerification({Key key, this.bankEnum, this.userIdToBeUpdate})
+      : super(key: key);
 
   @override
   State<BankVerification> createState() => _BankVerificationState();
@@ -27,6 +31,12 @@ class _BankVerificationState extends State<BankVerification>
     with BanksDetailView {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   BankVerificationController controller;
+
+  @override
+  dispose() {
+    super.dispose();
+    controller.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +99,10 @@ class _BankVerificationState extends State<BankVerification>
             keyboardType: TextInputType.number,
             onChange: (v) => controller.setAccount(v),
             title: "Enter Account Number",
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(10),
+            ],
           ),
           Row(
             children: [
@@ -112,17 +126,24 @@ class _BankVerificationState extends State<BankVerification>
             height: 15,
           ),
           SYButton(
+            disAble: !isNotEmpty(controller.accountName),
             loading: controller.pageState == PageState.loading,
-            title: "Continue",
+            title:
+                widget.bankEnum == BankEnum.registration ? "Proceed" : "Update",
             callback: () {
-              if (isNotEmpty(controller.accountName)) {
-                enrollController.setAccountName = controller.accountName;
-                enrollController.setAccountNumber = controller.accountNumber;
-                enrollController.setBankCode = controller.selectedBankData.code;
-                Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (_) => ImageVerificationScreen()));
+              if (widget.bankEnum == BankEnum.registration) {
+                if (isNotEmpty(controller.accountName)) {
+                  enrollController.setAccountName = controller.accountName;
+                  enrollController.setAccountNumber = controller.accountNumber;
+                  enrollController.setBankName =
+                      controller.selectedBankData.name;
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (_) => ImageVerificationScreen()));
+                }
+              } else {
+                controller.updateUserAccount(widget.userIdToBeUpdate);
               }
             },
           ),
@@ -142,4 +163,15 @@ class _BankVerificationState extends State<BankVerification>
 
   @override
   onSuccess() async {}
+
+  @override
+  onUpdateAccount(String message) async {
+    await showSnackbar(
+      message,
+      context,
+      key: _scaffoldKey,
+    );
+    await Future.delayed(Duration(seconds: 3));
+    Navigator.pop(context);
+  }
 }

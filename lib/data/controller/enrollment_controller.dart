@@ -145,8 +145,8 @@ class EnrollmentController with ChangeNotifier {
     enrollmentModel.accName = v;
   }
 
-  set setBankCode(v) {
-    enrollmentModel.bankCode = v;
+  set setBankName(v) {
+    enrollmentModel.bankName = v;
   }
 
   Future getImage(ImageSource imageSource, {forUser = true}) async {

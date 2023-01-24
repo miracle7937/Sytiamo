@@ -11,6 +11,7 @@ class Routes {
   static String agentRepayment = "$baseURL/loanrepay/createrepay";
   static String getBanks = "$baseURL/get-banks";
   static String verifyAccount = "$baseURL/verify-account";
+  static String updateBank = "$baseURL/update-bank";
   static String reportRoute = "$baseURL/loanrepay/report";
   static String smsRoute = "$baseURL/send";
   static String ticket = "$baseURL/support_tickets";

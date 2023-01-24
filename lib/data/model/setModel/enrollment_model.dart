@@ -37,13 +37,13 @@ class EnrollmentModel {
   // String bank_code;
   String accountNumber;
   String accName;
-  String bankCode;
+  String bankName;
 
   EnrollmentModel(
       {this.id,
       this.accountNumber,
       this.accName,
-      this.bankCode,
+      this.bankName,
       this.guarantorBusStop1,
       this.guarantorBusStop2,
       this.profilePicture,
@@ -75,7 +75,7 @@ class EnrollmentModel {
   EnrollmentModel.fromJson(Map<String, dynamic> json) {
     accountNumber = json["account_number"];
     accName = json["acc_name"];
-    bankCode = json["bank_code"];
+    bankName = json["bank_name"];
     id = json['id'];
     firstName = json['first_name'];
     middleName = json['middle_name'];
@@ -140,7 +140,7 @@ class EnrollmentModel {
     data['gpicture'] = this.gpicture;
     data['account_number'] = this.accountNumber;
     data['acc_name'] = this.accName;
-    data['bank_code'] = this.bankCode;
+    data['bank_name'] = this.bankName;
 
     return data;
   }

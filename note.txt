@@ -6,3 +6,6 @@
 
   1/4/2023 ======================> versionV1.3.2
     - added bank verification to enrollment
+
+     1/24/2023 ======================> versionV1.3.3
+      - update bank verification for edit customers

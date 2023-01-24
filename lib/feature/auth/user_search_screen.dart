@@ -134,8 +134,6 @@ class _UserSearchScreenState extends State<UserSearchScreen>
                             " " +
                             (model.middleName ?? "");
 
-                        print("Miracle ${widget.branchID} ");
-                        print("Ebuka ${model.branchId.toString()} ");
                         return Container(
                           margin: EdgeInsets.all(8),
                           decoration: BoxDecoration(
@@ -158,9 +156,18 @@ class _UserSearchScreenState extends State<UserSearchScreen>
                                   key: "Date of birth:", value: model.dob));
                               selector.add(SelectorModel(
                                   key: "address: ", value: model.address));
+
                               selector.add(SelectorModel(
                                   key: "shop address:",
                                   value: model.shopAddress));
+                              //added
+                              selector.add(SelectorModel(
+                                  key: "Bank name:", value: model.bankName));
+                              selector.add(SelectorModel(
+                                  key: "Account Name:", value: model.accName));
+                              selector.add(SelectorModel(
+                                  key: "Account Number",
+                                  value: model.accountNumber));
 
                               selector.add(SelectorModel(
                                   key: "Guarantor Name:", value: model.gname));
